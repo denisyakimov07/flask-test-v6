@@ -1,0 +1,67 @@
+{%extends 'base.html'%}
+{%block content%}
+<header class="masthead" style="background-image: url('{{ url_for('static', filename='images/login.jpg')}}')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="page-heading">
+                    {% if msg_sent: %}
+                    <h1>Successfully Login</h1>
+                    {% else: %}
+                    <h1>Pleas Login</h1>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- CSRF -->
+<div>
+    <form class="login" method="POST" action="">
+        {%for cat, msg in get_flashed_messages(True)%}
+        <div class="flash {{cat}}">{{msg}}</div>
+        {%endfor%}
+        <br>
+        {{ form.hidden_tag() }}
+        <div class="control-group">
+          <div class=" floating-label-form-group controls">
+            {{ form.email.label() }}
+            {{ form.email()}}
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        <ul>
+            {% for error in form.email.errors %}
+            <li style="color:red;">{{ error }}</li>
+            {% endfor %}
+        </ul>
+        <div class="control-group">
+          <div class="form-group col-xs-12 floating-label-form-group controls">
+              {{ form.password.label()}}
+              {{ form.password(class="form-control") }}
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        <ul>
+            {% for error in form.password.errors %}
+            <li style="color:red;">{{ error }}</li>
+            {% endfor %}
+        </ul>
+        <br>
+        <div class="container px-4">
+            <div class="row gx-5">
+                <div class="col justify-content-start to_left">
+                    {{ form.submit(class="btn btn-primary") }}
+                </div>
+                <div class="col">
+                    <a class="nav-link" href="{{url_for ('sing_up')}}">Sing Up</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+{%endblock%}

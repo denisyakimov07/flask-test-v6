@@ -1,0 +1,171 @@
+{%extends 'base.html'%}
+{%block content%}
+
+<header class="masthead" style="background-image: url('{{ url_for('static', filename='images/sing_up.jpg')}}')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="page-heading">
+                    {% if msg_sent: %}
+                    <h1>Successfully sent your message</h1>
+                    {% else: %}
+                    <h1>Edit Profile</h1>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div class="container">
+    <h1></h1>
+    <hr>
+    <div class="row">
+
+        <!-- left column -->
+        <div class="col-sm-12 col-12  col-md-12 col-lg-3 col-xl-3 col-xxl-3">
+            <div class="text-center">
+                <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
+                <h6>Upload a different photo...</h6>
+                <input type="file" class="form-control">
+            </div>
+        </div>
+        <!-- edit form column -->
+        <div class="col-sm-12 col-12 col-md-12 col-lg-8 col-xl-8 col-xxl-8 personal-info">
+
+            <h3>Personal info</h3>
+            {%for cat, msg in get_flashed_messages(True)%}
+            <ul>
+                <li class="flash_str_{{cat}}">{{msg}}</li>
+            </ul>
+            {%endfor%}
+
+
+            <!-- name form  -->
+
+            <div class="row">
+                <div class="form-group col-5">
+                    <input type="text" class="form-control" name="username" placeholder="{{user_info.name}}"
+                           readonly>
+                </div>
+                <div class="panel-body col-4">
+                    <!-- Button trigger modal -->
+
+                    <button type="button" class=" " data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop">Change name
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    email
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                    </button>
+                                    <button type="button" class="btn btn-primary">Understood</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email form  -->
+                <div class="form-group col-5">
+                    <input type="text" class="form-control" name="username" placeholder="{{user_info.email}}"
+                           readonly>
+                </div>
+                <div class="panel-body col-4">
+                    <!-- Button trigger modal -->
+                    <button type="button" class=" " data-bs-toggle="modal"
+                            data-bs-target="#staticBackdropname">Change email
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdropname" data-bs-backdrop="static"
+                         data-bs-keyboard="false"
+                         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropnameLabel">Modal title</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    name
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                    </button>
+                                    <button type="button" class="btn btn-primary">Understood</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if user_info.email_confirm %}
+                <div class="form-group col-5">
+                    <ul>
+                        <li class="flash_str_success">Email confirmed</li>
+                    </ul>
+                </div>
+                <div class="row">
+                    {% else %}
+                    <div class="form-group col-5">
+                        <ul>
+                            <li class="flash_str_error">Email not confirmed</li>
+                        </ul>
+                    </div>
+
+                    <div class="form-group col-5">
+                        <button type="button" class=" ">Sent again</button>
+                    </div>
+                    {% endif %}
+                </div>
+                <!-- form -->
+                <form class="form-horizontal" action="{{url_for('profile')}}" method="POST" novalidate>
+                    {{ form.hidden_tag() }}
+                    <!-- password form  -->
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            {{ form.password.label()}}
+                            {{ form.password(class="form-control") }}
+                        </div>
+                    </div>
+
+                    <!-- password confirm form  -->
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            {{ form.confirm.label()}}
+                            {{ form.confirm(class="form-control") }}
+                        </div>
+                    </div>
+
+                    <!-- password confirm form  -->
+                    <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-8">
+                            <input type="submit" class="btn btn-primary" value="Save new password" id="sendMessageButton">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+
+
+{%endblock%}

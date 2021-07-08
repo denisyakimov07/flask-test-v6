@@ -1,0 +1,74 @@
+{%extends 'base.html'%}
+{%block content%}
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('{{ url_for('static', filename='images/new_post.jpg')}}')">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="page-heading">
+          {% if msg_sent: %}
+          <h1>Successfully sent your message</h1>
+          {% else: %}
+          <h1>Add new post</h1>
+          <!-- <span class="subheading">Have questions? I have answers.</span> -->
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+      <!-- <p>Want to get in touch? Fill out the form below to send me a message and I will get back to you as soon as possible!</p> -->
+      <!-- Contact Form - Enter your email address on line 19 of the mail/contact_me.php file to make this form work. -->
+      <!-- WARNING: Some web hosts do not allow emails to be sent through forms to common mail hosts like Gmail or Yahoo. It's recommended that you use a private domain email address! -->
+      <!-- To use the contact form, your site must be on a live web host with PHP! The form will not work locally! -->
+      {%for cat, msg in get_flashed_messages(True)%}
+        <div class="flash {{cat}}">{{msg}}</div>
+        {%endfor%}
+      <form name="sentMessage" id="contactForm" action="{{url_for('add_new_post') }}" method="post" novalidate>
+
+        <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            <label>Title of post</label>
+            <input type="title" name="title" class="form-control" placeholder="Title" id="title" required data-validation-required-message="Please enter your title.">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            <label>Subtitle of post</label>
+            <input type="subtitle" name="subtitle" class="form-control" placeholder="Subtitle of post" id="subtitle" required data-validation-required-message="Please enter your subtitle.">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            <label>Image url</label>
+            <input type="image_url" name="image_url" value="https://picsum.photos/1920/1080" class="form-control" placeholder="Image url" id="image_url" required data-validation-required-message="Please enter your Image url.">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            <label>Content</label>
+            <textarea rows="5" name="content" class="form-control" placeholder="Content" id="content" required data-validation-required-message="Please enter a content."></textarea>
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        <br>
+        <div id="success"></div>
+        <button type="submit" class="btn btn-primary" id="sendMessageButton">Send</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+{%endblock%}

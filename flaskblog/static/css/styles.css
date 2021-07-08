@@ -1,0 +1,39 @@
+.login{
+margin: 2% 30% 2% 30%;
+
+}
+
+#emailHelp{
+text-align: center;
+}
+
+.flash{padding: 10px;}
+.flash.success{
+border:1px solid #21DB56;
+background: #AEFFC5;
+}
+
+.flash.error{
+border:1px solid #FF4343;
+background: #FF9C9C;
+}
+
+.Delete_btn{
+margin-left: 10%
+}
+
+ a, a:hover,a:visited, a:focus {
+    text-decoration:none;
+}
+
+.to_left{
+padding:0 0 0 0;
+}
+
+.flash_str_error{
+color: #FF4343;
+}
+
+.flash_str_success{
+color: #21DB56;
+}

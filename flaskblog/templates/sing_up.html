@@ -1,0 +1,89 @@
+{%extends 'base.html'%}
+{%block content%}
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('{{ url_for('static', filename='images/sing_up.jpg')}}')">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="page-heading">
+          {% if msg_sent: %}
+          <h1>Successfully sent your message</h1>
+          {% else: %}
+          <h1>Sing Up</h1>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+      {%for cat, msg in get_flashed_messages(True)%}
+      <div class="flash {{cat}}">{{msg}}</div>
+      {%endfor%}
+      <form name="SingUp" id="SingUpForm" action="{{ url_for('sing_up') }}" method="POST" novalidate>
+        {{ form.hidden_tag() }}
+          <div class="control-group">
+          <div class=" floating-label-form-group controls">
+            {{ form.name.label() }}
+            {{ form.name()}}
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        <ul>
+            {% for error in form.name.errors %}
+            <li style="color:red;">{{ error }}</li>
+            {% endfor %}
+        </ul>
+        <div class="control-group">
+          <div class=" floating-label-form-group controls">
+            {{ form.email.label() }}
+            {{ form.email()}}
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        <ul>
+            {% for error in form.email.errors %}
+            <li style="color:red;">{{ error }}</li>
+            {% endfor %}
+        </ul>
+        <div class="control-group">
+          <div class="form-group col-xs-12 floating-label-form-group controls">
+              {{ form.password.label()}}
+              {{ form.password(class="form-control") }}
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+         <ul>
+            {% for error in form.password.errors %}
+            <li style="color:red;">{{ error }}</li>
+            {% endfor %}
+        </ul>
+        <div class="control-group">
+          <div class="form-group col-xs-12 floating-label-form-group controls">
+              {{ form.confirm.label()}}
+              {{ form.confirm(class="form-control") }}
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        <ul>
+            {% for error in form.confirm.errors %}
+            <li style="color:red;">{{ error }}</li>
+            {% endfor %}
+        </ul>
+        <br>
+        <div id="success"></div>
+        <button type="submit" class="btn btn-primary" id="sendMessageButton">Sing UP</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+{%endblock%}
