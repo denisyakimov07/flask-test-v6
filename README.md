@@ -81,7 +81,7 @@ docker pull ghcr.io/denisyakimov07/flask-test-v6:latest
 
 # Run the container
 docker run -d --name flask-blog -p 5000:5000 \
-    -v flask-blog-data:/app/flaskblog.db \
+    -v flask-blog-data:/app/data \
     -e FLASK_SECRET_KEY=<long-random-string> \
     -e MAIL_SERVER=mail.smtp2go.com \
     -e MAIL_PORT=587 \
@@ -102,8 +102,8 @@ Package visibility can be changed in the repository settings:
 **Packages -> flask-test-v6 -> package settings -> Visibility**.
 
 The container applies database migrations on startup (`flask db upgrade`)
-before starting gunicorn. The SQLite file is stored in the `flask-blog-data`
-volume so it survives container recreation.
+before starting gunicorn. The SQLite file (`/app/data/flaskblog.db`) is
+stored in the `flask-blog-data` volume so it survives container recreation.
 
 ## Configuration (.env)
 

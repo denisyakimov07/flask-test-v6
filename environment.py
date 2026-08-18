@@ -28,6 +28,8 @@ class _Environment:
         db_name = os.getenv("DB_DATABASE", "flaskblog.db")
         if db_type == "sqlite":
             db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), db_name)
+            # Ensure the directory exists (e.g. /app/data volume in Docker)
+            os.makedirs(os.path.dirname(db_path), exist_ok=True)
             self.DB_DATABASE_URI = f"sqlite:///{db_path}"
         else:
             self.DB_DATABASE_URI = (

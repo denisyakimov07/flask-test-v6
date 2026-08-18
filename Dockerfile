@@ -14,8 +14,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the application code (including migrations for `flask db upgrade`)
 COPY . .
 
-# The SQLite database file lives in the app directory; persist it via a volume
-VOLUME ["/app/flaskblog.db"]
+# The SQLite database file lives in /app/data; persist it via a volume.
+# Note: a VOLUME must be a directory, so the DB file is placed inside it.
+ENV DB_DATABASE=data/flaskblog.db
+VOLUME ["/app/data"]
 
 EXPOSE 5000
 
