@@ -2,15 +2,12 @@ from flask import render_template, request, flash, redirect, url_for, abort
 from flask_login import login_user, login_required, logout_user, current_user
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_mail import Mail, Message
+from flask_mail import Message
 
-from environment import get_env
-from flaskblog import app, login_manager
+from flaskblog import app, login_manager, mail
 from flaskblog.models import BlogPost, User, db, LoginForm, SingUpForm, ProfileFormPassword
 
 s = URLSafeTimedSerializer(app.config['SECRET_KEY'])
-mail = Mail(app)
-app.config.from_object(get_env())
 
 
 @app.errorhandler(404)
@@ -48,7 +45,7 @@ def user():
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return db.session.get(User, int(user_id))
 
 
 @app.route('/')
@@ -172,7 +169,7 @@ def login():
 def sent_token(email):
     try:
         token = s.dumps(email)
-        msg = Message('Confirm Email', sender="d33652@gmail.com", recipients=[email])
+        msg = Message('Confirm Email', sender=app.config['MAIL_DEFAULT_SENDER'], recipients=[email])
         link = url_for('confirm_email', token=token, _external=True)
         msg.body = f"{link}"
         mail.send(msg)

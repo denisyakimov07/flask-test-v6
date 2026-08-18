@@ -2,9 +2,6 @@ from flask_login import UserMixin
 from flaskblog import db
 import datetime
 
-from flask_script import Manager
-from flask_migrate import Migrate, MigrateCommand
-
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired, Email

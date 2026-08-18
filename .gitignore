@@ -1,5 +1,6 @@
 venv/
 /__pycache__/
+**/__pycache__/
 /.idea/
 /.git
 /venv/
@@ -9,3 +10,4 @@ env
 node_modules/
 /.env
 .env
+*.db
