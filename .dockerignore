@@ -1,0 +1,21 @@
+# Version control
+.git
+.gitignore
+
+# Python artifacts
+__pycache__/
+**/__pycache__/
+*.pyc
+venv/
+env/
+
+# Local environment and database (secrets and data must not be baked into the image)
+.env
+.env.staging
+*.db
+
+# IDE
+.idea/
+
+# Docs
+README.md

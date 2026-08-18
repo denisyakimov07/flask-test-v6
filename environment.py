@@ -23,7 +23,7 @@ class _Environment:
         self.MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
         self.MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER')
 
-        # SQLite: DB_DATABASE_TYPE=sqlite, DB_DATABASE=имя файла (относительно корня проекта)
+        # SQLite: DB_DATABASE_TYPE=sqlite, DB_DATABASE=file name (relative to the project root)
         db_type = os.getenv("DB_DATABASE_TYPE", "sqlite")
         db_name = os.getenv("DB_DATABASE", "flaskblog.db")
         if db_type == "sqlite":
