@@ -72,10 +72,14 @@ flask db upgrade
 
 ## Docker
 
-Build and run the production image (gunicorn):
+The image is built by GitHub Actions on every push to `master` and published
+to GHCR as a **public** package — no authentication is required to pull it.
 
 ```bash
-docker build -t flask-blog .
+# Pull the image (no docker login needed, the package is public)
+docker pull ghcr.io/denisyakimov07/flask-test-v6:latest
+
+# Run the container
 docker run -d --name flask-blog -p 5000:5000 \
     -v flask-blog-data:/app/flaskblog.db \
     -e FLASK_SECRET_KEY=<long-random-string> \
@@ -84,9 +88,18 @@ docker run -d --name flask-blog -p 5000:5000 \
     -e MAIL_USERNAME=emailarmserver \
     -e MAIL_PASSWORD=<smtp2go-password> \
     -e MAIL_DEFAULT_SENDER=admin@denisdns.com \
-    flask-blog
+    ghcr.io/denisyakimov07/flask-test-v6:latest
 # -> http://localhost:5000
 ```
+
+To build locally instead:
+
+```bash
+docker build -t flask-blog .
+```
+
+Package visibility can be changed in the repository settings:
+**Packages -> flask-test-v6 -> package settings -> Visibility**.
 
 The container applies database migrations on startup (`flask db upgrade`)
 before starting gunicorn. The SQLite file is stored in the `flask-blog-data`
